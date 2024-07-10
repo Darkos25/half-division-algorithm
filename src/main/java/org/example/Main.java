@@ -1,40 +1,42 @@
 package org.example;
 
-import java.io.IOException;
-
-
-
 public class Main {
-    public static void main(String[] args) throws IOException {
-        System.out.println(mySqrt(645161265));
+    public static void main(String[] args) {
 
-
+        System.out.println(mySqrt(51564684));
     }
     public static long mySqrt(long x) {
-        long current = 0;
-        String length = Long.toString(x);
-        long numsOfsqrt = 1;
-        long maxLength = 1;
-        if (x == 1 || x == 2 || x == 3){
-            return 1;
+        if (x < 0) {
+            throw new IllegalArgumentException("Negative input is not allowed");
         }
-        if (x == 0){
-            return 0;
-        }
-        for (int i = 1; i < Math.ceil((double) length.length()/2); i++) {
-            numsOfsqrt *= 10;
-            maxLength = numsOfsqrt * 10;
+        if (x == 0 || x == 1) {
+            return x;
         }
 
-        while (numsOfsqrt*numsOfsqrt < x && maxLength*maxLength > x) {
-            numsOfsqrt += 1;
-            maxLength -= 1;
-            if (numsOfsqrt * numsOfsqrt > x) {
-                current = numsOfsqrt-1;
-            } else if (maxLength < x) {
-                current = maxLength;
+        long minLength = 1;
+        long maxLength = 10;
+
+        while (maxLength * maxLength <= x) {
+            minLength = maxLength;
+            maxLength *= 10;
+        }
+
+        long minIndex = minLength;
+        long maxIndex = maxLength;
+
+        while (minIndex <= maxIndex) {
+            long mid = minIndex + (maxIndex - minIndex) / 2;
+            long square = mid * mid;
+
+            if (square == x) {
+                return mid;
+            } else if (square < x) {
+                minIndex = mid + 1;
+            } else {
+                maxIndex = mid - 1;
             }
         }
-        return current;
+
+        return maxIndex;
     }
 }
