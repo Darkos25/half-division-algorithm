@@ -27,7 +27,6 @@ public class Main {
         while (minIndex <= maxIndex) {
             long mid = minIndex + (maxIndex - minIndex) / 2;
             long square = mid * mid;
-
             if (square == x) {
                 return mid;
             } else if (square < x) {
